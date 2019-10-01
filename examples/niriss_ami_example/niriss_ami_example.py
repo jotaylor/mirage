@@ -19,16 +19,26 @@ output_directory = os.path.join(home_dir, 'ami_mirage_simulation_example')
 simdata_output_directory = output_directory
 
 # AB Dor is in field 19 and HD37093 is in field 20 in Kevin's targets.xlsx file
-catalogues = {'niriss': os.path.join(ami_example_dir, 'stars_field19_20_combined_allfilters.list')}
+catalogues = {'mytarg1': 
+               {'niriss': 
+                  {'point_source': os.path.join(ami_example_dir, 'stars_field19_20_combined_allfilters.list')}}}
 parameter_defaults = {'PAV3': 275., 'DATE': '2020-09-20'}
 
 observation_file = os.path.join(output_directory, '793_observation_list.yaml')
-
-generate_observationlist.get_observation_dict(xml_name, observation_file, catalogs=catalogues)
-yam = yaml_generator.SimInput(input_xml=xml_name, pointing_file=pointing_name,
-                              catalogs=catalogues, observation_list_file=observation_file,
-                              verbose=True, output_dir=output_directory, simdata_output_dir=simdata_output_directory,
-                              use_JWST_pipeline=True, offline=False, parameter_defaults=parameter_defaults)
+generate_observationlist.get_observation_dict(xml_name, 
+                                              observation_file, 
+                                              catalogs=catalogues)
+yam = yaml_generator.SimInput(input_xml=xml_name, 
+                              pointing_file=pointing_name,
+                              catalogs=catalogues, 
+                              observation_list_file=observation_file,
+                              verbose=True, 
+                              output_dir=output_directory, 
+                              simdata_output_dir=simdata_output_directory,
+                              use_JWST_pipeline=True, 
+                              offline=False, 
+                              roll_angle=275.,
+                              dates='2020-09-20')
 
 datatype = 'linear, raw'
 yam.datatype = datatype
